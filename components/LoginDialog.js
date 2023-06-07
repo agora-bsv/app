@@ -141,7 +141,7 @@ const LoginDialog = () => {
             </button>
           </div>
           <div className="dialogtxt _12">
-            Don't have an account?{' '}
+            Do not have an account?{' '}
             <Link href="/signup" className="link">Sign Up</Link>
             <br />
             Forgot password?{' '}
