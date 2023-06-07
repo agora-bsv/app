@@ -16,35 +16,59 @@ const Navbar = () => {
   };
 
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        {user && user.emailVerified && (
-          <li>
-            <Link href="/profile">Profile</Link>
-          </li>
-        )}
-        {user && !user.emailVerified && (
-          <li>
-            <Link href="/verify-email">Verify Email</Link>
-          </li>
-        )}
-        <li>
-          {user ? (
-            <Link href="/" passHref>
-              <button onClick={handleLogout}>Logout</button>
+    <div className="navbar">
+        <Link href="/" className="navlink">
+          <div className="navicon"></div>
+          <div className="navlabel">Home</div>
+        </Link>
+        <Link href="#" className="navlink">
+          <div className="navicon"></div>
+          <div className="navlabel">Post</div>
+        </Link>
+        <Link href="#" className="navlink">
+          <div className="navicon"></div>
+          <div className="navlabel">Browse</div>
+        </Link>
+        <Link href="#" className="navlink">
+          <div className="navicon"></div>
+          <div className="navlabel">Chat</div>
+        </Link>
+        <Link href="#" className="navlink">
+          <div className="navicon"></div>
+          <div className="navlabel">Wallet</div>
+        </Link>
+        {user ? (
+          <>
+            {user.emailVerified && (
+              <Link href="/profile" className="navlink">
+                <div className="navicon"></div>
+                <div className="navlabel">Profile</div>
+              </Link>
+            )}
+            {!user.emailVerified && (
+              <Link href="/verify-email" className="navlink">
+                <div className="navicon"></div>
+                <div className="navlabel">Verify Email</div>
+              </Link>
+            )}
+            <Link href="/" className="navlink" onClick={handleLogout}>
+              <div className="navicon"></div>
+              <div className="navlabel">Logout</div>
             </Link>
-          ) : (
-            <>
-              <Link href="/login">Login</Link>
-              <Link href="/signup">Sign Up</Link>
-            </>
-          )}
-        </li>
-      </ul>
-    </nav>
+          </>
+        ) : (
+          <>
+            <Link href="/login" className="navlink">
+              <div className="navicon"></div>
+              <div className="navlabel">Login</div>
+            </Link>
+            <Link href="/signup" className="navlink">
+              <div className="navicon"></div>
+              <div className="navlabel">Sign Up</div>
+            </Link>
+          </>
+        )}
+    </div>
   );
 };
 

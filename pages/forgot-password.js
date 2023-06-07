@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { auth } from '../firebase';
+import Viewport from '../components/Viewport';
 
 const ForgotPasswordPage = () => {
   const router = useRouter();
@@ -23,7 +24,20 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div>
+    <Viewport>
+      <div className="header">
+        <div className="headerobj">
+          <div className="fonticon"></div>
+        </div>
+        <div className="headerbody">
+          <div className="headertitle">Profile Page</div>
+          <div className="headerdescription">This is your profile page</div>
+        </div>
+        <div className="headerobj">
+          <div className="fonticon"></div>
+        </div>
+      </div>
+      <div className="body">
       <h1>Forgot Password</h1>
       <form onSubmit={handleForgotPassword}>
         <div>
@@ -34,7 +48,11 @@ const ForgotPasswordPage = () => {
       </form>
       {successMessage && <p>{successMessage}</p>}
       {error && <p>{error}</p>}
-    </div>
+      </div>
+      <div className="footer">
+        {/* Footer content */}
+      </div>
+     </Viewport>
   );
 };
 

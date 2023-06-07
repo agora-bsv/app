@@ -2,15 +2,17 @@
 
 import '../styles/globals.css';
 import { AuthProvider } from '../firebase';
-import Navbar from '../components/Navbar';
+import Viewport from '../components/Viewport';
 
 function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
-      <Navbar />
-      <Component {...pageProps} />
+      <Viewport>
+        <Component {...pageProps} />
+      </Viewport>
     </AuthProvider>
   );
 }
 
 export default MyApp;
+
