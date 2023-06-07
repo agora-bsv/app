@@ -6,6 +6,8 @@ import 'firebase/compat/firestore';
 import { createContext, useContext, useEffect, useState } from 'react';
 import dotenv from 'dotenv';
 
+
+
 dotenv.config();
 
 const firebaseConfig = {
@@ -22,7 +24,6 @@ firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-
 
 // Enable Google sign-in provider
 const googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -65,3 +66,4 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
