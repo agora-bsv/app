@@ -19,13 +19,19 @@ const VerifyEmailPage = () => {
           await auth.applyActionCode(oobCode);
           await auth.currentUser.reload();
         } catch (error) {
-          console.error(error);
+          console.error('Error applying action code:', error);
         }
       }
 
       const user = auth.currentUser;
-      if (user && user.emailVerified) {
-        router.push('/profile');
+      if (user) {
+        console.log('User is logged in');
+        if (user.emailVerified) {
+          console.log('Email is verified');
+          router.push('/profile');
+        } else {
+          console.log('Email is not verified');
+        }
       }
     };
 
@@ -35,7 +41,9 @@ const VerifyEmailPage = () => {
   const handleResendEmail = () => {
     const user = auth.currentUser;
     if (user) {
-      user.sendEmailVerification();
+      user.sendEmailVerification()
+        .then(() => console.log('Email verification sent'))
+        .catch((error) => console.error('Error sending email verification:', error));
     }
   };
 
@@ -50,6 +58,3 @@ const VerifyEmailPage = () => {
 };
 
 export default VerifyEmailPage;
-
-
-

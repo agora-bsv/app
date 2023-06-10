@@ -4,7 +4,7 @@ import '../styles/globals.css';
 import { AuthProvider } from '../firebase';
 import Viewport from '../components/Viewport';
 
-function MyApp({ Component, pageProps }) {
+function Agora({ Component, pageProps }) {
   return (
     <AuthProvider>
       <Viewport>
@@ -14,5 +14,5 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default Agora;
 
