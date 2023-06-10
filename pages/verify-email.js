@@ -18,7 +18,12 @@ const VerifyEmailPage = () => {
         try {
           await auth.applyActionCode(oobCode);
           await auth.currentUser.reload();
-          router.push('/profile');
+          const user = auth.currentUser;
+          if (user && user.emailVerified) {
+            router.push('/profile');
+          } else {
+            router.push('/login');
+          }
         } catch (error) {
           console.error(error);
         }
@@ -36,10 +41,12 @@ const VerifyEmailPage = () => {
   };
 
   return (
-    <div>
-      <h1>Verify your email</h1>
-      <p>Did not receive an email? <button onClick={handleResendEmail}>Resend</button></p>
-    </div>
+    <Viewport>
+      <div>
+        <h1>Verify your email</h1>
+        <p>Did not receive an email? <button onClick={handleResendEmail}>Resend</button></p>
+      </div>
+    </Viewport>
   );
 };
 

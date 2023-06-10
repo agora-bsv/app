@@ -11,7 +11,11 @@ const ProfilePage = () => {
   useEffect(() => {
     const checkEmailVerification = () => {
       const user = auth.currentUser;
-      if (user && !user.emailVerified) {
+      if (!user) {
+        // User is not logged in, redirect to the login page
+        router.push('/login');
+      } else if (!user.emailVerified) {
+        // User is logged in but email is not verified, redirect to the verify-email page
         router.push('/verify-email');
       }
     };
@@ -44,4 +48,3 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
-

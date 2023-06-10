@@ -7,6 +7,8 @@ import Viewport from '../components/Viewport';
 // IndexPage component
 const IndexPage = () => {
   return (
+
+    
     <Viewport>
       <div className="header">
       <div class="header">
