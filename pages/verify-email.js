@@ -17,13 +17,6 @@ const VerifyEmailPage = () => {
       if (mode === 'verifyEmail' && oobCode) {
         try {
           await auth.applyActionCode(oobCode);
-          await auth.currentUser.reload();
-          const user = auth.currentUser;
-          if (user && user.emailVerified) {
-            router.push('/profile');
-          } else {
-            router.push('/login');
-          }
         } catch (error) {
           console.error(error);
         }
@@ -31,6 +24,18 @@ const VerifyEmailPage = () => {
     };
 
     checkEmailVerification();
+
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        if (user.emailVerified) {
+          router.push('/profile');
+        } else {
+          router.push('/login');
+        }
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const handleResendEmail = () => {
@@ -51,3 +56,4 @@ const VerifyEmailPage = () => {
 };
 
 export default VerifyEmailPage;
+
