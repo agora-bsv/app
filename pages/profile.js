@@ -14,7 +14,10 @@ const ProfilePage = () => {
       if (!user) {
         // User is not logged in, redirect to the login page
         router.push('/login');
-      } else if (!user.emailVerified) {
+      } else if (user.emailVerified) {
+        // User is logged in and email is verified, stay on the profile page
+        return;
+      } else {
         // User is logged in but email is not verified, redirect to the verify-email page
         router.push('/verify-email');
       }
