@@ -8,7 +8,9 @@ import { useRouter } from 'next/router';
 const SocialLoginButtons = () => {
     const router = useRouter();
   
-    const handleGoogleSignIn = async () => {
+    const handleGoogleSignIn = async (e) => {
+      e.preventDefault(); // Prevent form submission
+  
       try {
         await signInWithGoogle();
         console.log('Google login successful');
@@ -20,7 +22,7 @@ const SocialLoginButtons = () => {
 
   return (
     <div className="oauthgrid">
-      <button className="itembutton oauth w-inline-block" onClick={handleGoogleSignIn}>
+      <button type="button" className="itembutton oauth" onClick={handleGoogleSignIn}>
         <div className="itemobj">
           <div className="fonticon brands"></div>
         </div>
@@ -28,7 +30,7 @@ const SocialLoginButtons = () => {
           <div className="buttontitle _12">Google</div>
         </div>
       </button>
-      <button className="itembutton oauth w-inline-block">
+      <button className="itembutton oauth">
         <div className="itemobj">
           <div className="fonticon brands"></div>
         </div>
@@ -36,7 +38,7 @@ const SocialLoginButtons = () => {
           <div className="buttontitle _12">Twitter</div>
         </div>
       </button>
-      <button className="itembutton oauth w-inline-block">
+      <button className="itembutton oauth">
         <div className="itemobj">
           <img
             src="https://uploads-ssl.webflow.com/647fa62eb19b9b9e23cdc100/648029610832005036e0f702_hc.svg"

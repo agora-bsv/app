@@ -5,6 +5,7 @@ import { auth, signInWithGoogle } from '../firebase';
 import { useRouter } from 'next/router';
 import LoginDialog from '../components/LoginDialog';
 import Viewport from '../components/Viewport';
+import PageLayout from '../components/PageLayout';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -16,17 +17,17 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     if (!email) {
       setEmailError('Enter your email');
       return;
     }
-  
+
     if (!password) {
       setPasswordError('Enter your password');
       return;
     }
-  
+
     try {
       console.log('Attempting login');
       await auth.signInWithEmailAndPassword(email, password);
@@ -36,7 +37,7 @@ const LoginPage = () => {
       setLoginError('Email/Password invalid');
     }
   };
-  
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -61,38 +62,32 @@ const LoginPage = () => {
       console.error('Error signing in with Google from LoginPage:', error);
     }
   };
-  
 
   return (
     <Viewport>
-      <div className="header">
-        <div className="headerobj">
-          <div className="fonticon"></div>
-        </div>
-        <div className="headerbody">
-          <div className="headertitle">AGORA BETA v0.0.1</div>
-          <div className="headerdescription">This is some text inside of a div block.</div>
-        </div>
-        <div className="headerobj">
-          <div className="fonticon"></div>
-        </div>
-      </div>
-      <div className="body">
-       <LoginDialog router={router}
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          handleLogin={handleLogin}
-          handleGoogleSignIn={handleGoogleSignIn}
-          emailError={emailError}
-          passwordError={passwordError}
-          loginError={loginError}
-        />
-      </div>
-      <div>
+      <PageLayout
+        title="Login"
+        description="Welcome back, fellow human."
+        headerObjects={[
+          { icon: '' },
+          { icon: '', onClick: () => console.log('Perform action') },
+        ]}>
+   
+            <LoginDialog
+            router={router}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            handleLogin={handleLogin}
+            handleGoogleSignIn={handleGoogleSignIn}
+            emailError={emailError}
+            passwordError={passwordError}
+            loginError={loginError}
+          />
+        
         <div className="footer">{/* Footer content */}</div>
-      </div>
+      </PageLayout>
     </Viewport>
   );
 };

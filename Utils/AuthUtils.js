@@ -25,3 +25,5 @@ export const checkAuth = () => {
     checkEmailVerification();
   }, []);
 };
+
+

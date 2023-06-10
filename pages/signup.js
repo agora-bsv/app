@@ -1,10 +1,13 @@
 // pages/signup.js
 
+// pages/signup.js
+
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
 import { auth, signInWithGoogle } from '../firebase';
+import { useRouter } from 'next/router';
 import SignUpDialog from '../components/SignUpDialog';
 import Viewport from '../components/Viewport';
+import PageLayout from '../components/PageLayout';
 
 const SignUpPage = () => {
   const router = useRouter();
@@ -45,36 +48,32 @@ const SignUpPage = () => {
 
   return (
     <Viewport>
-      <div className="header">
-        <div className="headerobj">
-          <div className="fonticon"></div>
+      <PageLayout
+        title="AGORA BETA v0.0.1"
+        description="This is some text inside of a div block."
+        headerObjects={[
+          { icon: '' },
+          { icon: '', onClick: () => console.log('Perform action') },
+        ]}
+      >
+        <div className="body">
+          <SignUpDialog
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            handleSignUp={handleSignUp}
+            handleGoogleSignIn={handleGoogleSignIn}
+            emailError={emailError}
+            passwordError={passwordError}
+            signupError={signupError}
+          />
         </div>
-        <div className="headerbody">
-          <div className="headertitle">AGORA BETA v0.0.1</div>
-          <div className="headerdescription">This is some text inside of a div block.</div>
-        </div>
-        <div className="headerobj">
-          <div className="fonticon"></div>
-        </div>
-      </div>
-      <div className="body">
-        <SignUpDialog
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          handleSignUp={handleSignUp}
-          handleGoogleSignIn={handleGoogleSignIn}
-          emailError={emailError}
-          passwordError={passwordError}
-          signupError={signupError}
-        />
-      </div>
-      <div>
         <div className="footer">{/* Footer content */}</div>
-      </div>
+      </PageLayout>
     </Viewport>
   );
 };
 
 export default SignUpPage;
+

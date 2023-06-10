@@ -10,15 +10,18 @@ const PageLayout = ({ title, description, headerObjects, children }) => {
       <Navbar />
       <div className="window">
         <div className="header">
-          {headerObjects.map((obj, index) => (
-            <div className="headerobj" key={index}>
-              <div className="fonticon">{obj.icon}</div>
-            </div>
-          ))}
+          <div className="headerobj">
+            <div className="fonticon">{headerObjects[0].icon}</div>
+          </div>
+          <div className="headerbody">
+            <div className="headertitle">{title}</div>
+            <div className="headerdescription">{description}</div>
+          </div>
+          <a className="headerobj" onClick={headerObjects[1].onClick}>
+            <div className="fonticon">{headerObjects[1].icon}</div>
+          </a>
         </div>
         <div className="body">
-          <h1>{title}</h1>
-          <p>{description}</p>
           {children}
         </div>
         <div className="footer">{/* Footer content */}</div>
@@ -33,9 +36,13 @@ PageLayout.propTypes = {
   headerObjects: PropTypes.arrayOf(
     PropTypes.shape({
       icon: PropTypes.string.isRequired,
+      onClick: PropTypes.func,
     })
   ).isRequired,
   children: PropTypes.node.isRequired,
 };
 
 export default PageLayout;
+
+
+
