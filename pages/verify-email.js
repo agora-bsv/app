@@ -21,21 +21,14 @@ const VerifyEmailPage = () => {
           console.error(error);
         }
       }
+
+      const user = auth.currentUser;
+      if (user && user.emailVerified) {
+        router.push('/profile');
+      }
     };
 
     checkEmailVerification();
-
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        if (user.emailVerified) {
-          router.push('/profile');
-        } else {
-          router.push('/login');
-        }
-      }
-    });
-
-    return () => unsubscribe();
   }, []);
 
   const handleResendEmail = () => {
@@ -56,4 +49,5 @@ const VerifyEmailPage = () => {
 };
 
 export default VerifyEmailPage;
+
 
