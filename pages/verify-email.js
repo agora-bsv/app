@@ -17,6 +17,7 @@ const VerifyEmailPage = () => {
       if (mode === 'verifyEmail' && oobCode) {
         try {
           await auth.applyActionCode(oobCode);
+          await auth.currentUser.reload();
         } catch (error) {
           console.error(error);
         }
@@ -49,5 +50,6 @@ const VerifyEmailPage = () => {
 };
 
 export default VerifyEmailPage;
+
 
 
