@@ -23,6 +23,7 @@ body {
     justify-content: flex-start;
     align-items: stretch;
     display: flex;
+    flex: none;
   }
   
   .navlink {

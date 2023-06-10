@@ -40,7 +40,7 @@ const SignUpDialog = ({
     return true;
   };
 
-  const handleSignUpSubmit = (e) => {
+  const handleSignUpSubmit = async (e) => {
     e.preventDefault();
 
     if (!email) {
@@ -57,7 +57,26 @@ const SignUpDialog = ({
     setPasswordError('');
     setSignupError('');
 
-    handleSignUp();
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(email, password);
+      if (user) {
+        // User creation successful
+        console.log('User created:', user);
+      } else {
+        // User creation failed
+        console.error('Failed to create user');
+      }
+    } catch (error) {
+      // Handle specific error codes
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          setSignupError('An account already exists with this email. Try logging in.');
+          break;
+        default:
+          setSignupError(error.message);
+          break;
+      }
+    }
   };
 
   return (
@@ -165,3 +184,4 @@ const SignUpDialog = ({
 };
 
 export default SignUpDialog;
+
