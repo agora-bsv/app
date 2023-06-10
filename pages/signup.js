@@ -39,42 +39,41 @@ const SignUpPage = () => {
       await signInWithGoogle();
       router.push('/profile');
     } catch (error) {
-      console.error(error);
+      console.error('Error signing in with Google:', error);
     }
   };
 
   return (
     <Viewport>
-      
-    <div className="header">
-            <div className="headerobj">
-              <div className="fonticon"></div>
-            </div>
-            <div className="headerbody">
-              <div className="headertitle">AGORA BETA v0.0.1</div>
-              <div className="headerdescription">This is some text inside of a div block.</div>
-            </div>
-            <div className="headerobj">
-              <div className="fonticon"></div>
-            </div>
-          </div>
-          <div className="body">
-          <SignUpDialog
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        handleSignUp={handleSignUp}
-        handleGoogleSignIn={handleGoogleSignIn}
-        emailError={emailError}
-        passwordError={passwordError}
-        signupError={signupError}
-      />
-    </div><div>
-          <div className="footer">{/* Footer content */}</div>
-          </div>
-      </Viewport>
-
+      <div className="header">
+        <div className="headerobj">
+          <div className="fonticon"></div>
+        </div>
+        <div className="headerbody">
+          <div className="headertitle">AGORA BETA v0.0.1</div>
+          <div className="headerdescription">This is some text inside of a div block.</div>
+        </div>
+        <div className="headerobj">
+          <div className="fonticon"></div>
+        </div>
+      </div>
+      <div className="body">
+        <SignUpDialog
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          handleSignUp={handleSignUp}
+          handleGoogleSignIn={handleGoogleSignIn}
+          emailError={emailError}
+          passwordError={passwordError}
+          signupError={signupError}
+        />
+      </div>
+      <div>
+        <div className="footer">{/* Footer content */}</div>
+      </div>
+    </Viewport>
   );
 };
 

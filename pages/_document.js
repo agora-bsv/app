@@ -1,3 +1,5 @@
+// pages/_document.js
+
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 class agoraDocument extends Document {
@@ -5,6 +7,8 @@ class agoraDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
           <title>AGORA</title>
           <meta content="A New Public Square" name="description" />

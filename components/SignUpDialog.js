@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import SocialLoginButtons from './SocialLoginButtons';
 import { auth } from '../firebase';
 
 const SignUpDialog = ({
@@ -9,7 +10,6 @@ const SignUpDialog = ({
   setEmail,
   password,
   setPassword,
-  handleSignUp,
   handleGoogleSignIn,
 }) => {
   const [emailError, setEmailError] = useState('');
@@ -70,7 +70,7 @@ const SignUpDialog = ({
       // Handle specific error codes
       switch (error.code) {
         case 'auth/email-already-in-use':
-          setSignupError('An account already exists with this email. Try logging in.');
+          setSignupError('An account already exists with this email.');
           break;
         default:
           setSignupError(error.message);
@@ -80,7 +80,7 @@ const SignUpDialog = ({
   };
 
   return (
-    <div className="dialogwrapper w-form">
+    <div className="dialogwrapper">
       <form
         id="email-form"
         name="email-form"
@@ -100,7 +100,7 @@ const SignUpDialog = ({
             <div className="itembody">
               <input
                 type="email"
-                className="text-field w-input"
+                className="text-field"
                 name="Email"
                 data-name="Email"
                 placeholder="Enter your email"
@@ -121,7 +121,7 @@ const SignUpDialog = ({
             <div className="itembody">
               <input
                 type="password"
-                className="text-field w-input"
+                className="text-field"
                 name="Password"
                 data-name="Password"
                 placeholder="Enter your Password"
@@ -135,44 +135,18 @@ const SignUpDialog = ({
               />
             </div>
           </div>
-          <button type="submit" className="submitbutton w-inline-block">
+          <button type="submit" className="submitbutton">
             <div className="itemobj">
               <div className="fonticon"></div>
             </div>
             <div className="buttontitle">Sign Up</div>
           </button>
           <div className="dialogtxt">Or login with:</div>
-          <div className="oauthgrid">
-            <button className="itembutton oauth w-inline-block" onClick={handleGoogleSignIn}>
-              <div className="itemobj">
-                <div className="fonticon brands"></div>
-              </div>
-              <div className="itembody">
-                <div className="buttontitle _12">Google</div>
-              </div>
-            </button>
-            <button className="itembutton oauth w-inline-block">
-              <div className="itemobj">
-                <div className="fonticon brands"></div>
-              </div>
-              <div className="itembody">
-                <div className="buttontitle _12">Twitter</div>
-              </div>
-            </button>
-            <button className="itembutton oauth w-inline-block">
-              <div className="itemobj">
-                <img src="https://uploads-ssl.webflow.com/647fa62eb19b9b9e23cdc100/648029610832005036e0f702_hc.svg" loading="lazy" alt="" className="icon" />
-              </div>
-              <div className="itembody">
-                <div className="buttontitle _12">Handcash</div>
-              </div>
-            </button>
-          </div>
+          <SocialLoginButtons handleGoogleSignIn={handleGoogleSignIn} />
           <div className="dialogtxt _12">
             Got an account? <Link href="/login" className="link">Login</Link>
             <br />
             Forgot password? <a className="link" onClick={handleReset}>Reset</a>
-            {/* Quick sign-up? <button className="link" onClick={handleQuickSignUp}>Send link</button> */}
           </div>
           {emailError && <div className="dialogtxt error">{emailError}</div>}
           {passwordError && <div className="dialogtxt error">{passwordError}</div>}
@@ -184,4 +158,3 @@ const SignUpDialog = ({
 };
 
 export default SignUpDialog;
-

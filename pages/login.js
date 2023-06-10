@@ -28,13 +28,15 @@ const LoginPage = () => {
     }
   
     try {
+      console.log('Attempting login');
       await auth.signInWithEmailAndPassword(email, password);
+      console.log('Login successful');
     } catch (error) {
+      console.error('Error logging in:', error);
       setLoginError('Email/Password invalid');
     }
   };
   
-  // Listen to changes in the authentication state
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -45,26 +47,25 @@ const LoginPage = () => {
         }
       }
     });
-  
-    // Clean up the listener on unmount
+
     return () => unsubscribe();
   }, []);
-  
-  
 
   const handleGoogleSignIn = async () => {
     try {
+      console.log('Attempting Google login from LoginPage');
       await signInWithGoogle();
+      console.log('Google login successful from LoginPage');
       router.push('/profile');
     } catch (error) {
-      console.error(error);
+      console.error('Error signing in with Google from LoginPage:', error);
     }
   };
+  
 
   return (
     <Viewport>
-      
-<div className="header">
+      <div className="header">
         <div className="headerobj">
           <div className="fonticon"></div>
         </div>
@@ -77,22 +78,22 @@ const LoginPage = () => {
         </div>
       </div>
       <div className="body">
-       <LoginDialog
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        handleLogin={handleLogin}
-        handleGoogleSignIn={handleGoogleSignIn}
-        emailError={emailError}
-        passwordError={passwordError}
-        loginError={loginError}
-      />
-      {/* Rest of the code */}
-    </div><div>
-      <div className="footer">{/* Footer content */}</div>
+       <LoginDialog router={router}
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          handleLogin={handleLogin}
+          handleGoogleSignIn={handleGoogleSignIn}
+          emailError={emailError}
+          passwordError={passwordError}
+          loginError={loginError}
+        />
       </div>
-  </Viewport>
+      <div>
+        <div className="footer">{/* Footer content */}</div>
+      </div>
+    </Viewport>
   );
 };
 

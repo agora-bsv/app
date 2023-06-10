@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { auth, googleAuthProvider } from '../firebase'; // Import the auth and googleAuthProvider objects from your Firebase configuration file
+import SocialLoginButtons from './SocialLoginButtons';
+import { signInWithGoogle, auth } from '../firebase';
 
-const LoginDialog = () => {
+const LoginDialog = ({ router }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -29,8 +30,9 @@ const LoginDialog = () => {
 
   const handleGoogleSignIn = async () => {
     try {
-      await auth.signInWithPopup(googleAuthProvider);
+      await signInWithGoogle();
       console.log('Google login successful');
+      router.push('/profile'); // Redirect to the profile page
     } catch (error) {
       console.error('Error signing in with Google:', error);
     }
@@ -52,6 +54,7 @@ const LoginDialog = () => {
     try {
       await auth.signInWithEmailAndPassword(email, password);
       console.log('Login successful');
+      router.push('/profile'); // Redirect to the profile page
     } catch (error) {
       console.error('Error logging in:', error);
       setLoginError('Email/Password invalid');
@@ -59,8 +62,8 @@ const LoginDialog = () => {
   };
 
   return (
-    <div className="dialogwrapper w-form">
-      <form id="email-form" name="email-form" data-name="Email Form" method="get" className="dialog">
+    <div className="dialogwrapper">
+      <form id="login-form" name="login-form" data-name="Login Form" method="get" className="dialog">
         <div className="dialogcover"></div>
         <div className="dialogform">
           <div className="dialogheading">Login</div>
@@ -72,7 +75,7 @@ const LoginDialog = () => {
             <div className="itembody">
               <input
                 type="email"
-                className="text-field w-input"
+                className="text-field"
                 name="Email"
                 data-name="Email"
                 placeholder="Enter your email"
@@ -93,11 +96,11 @@ const LoginDialog = () => {
             <div className="itembody">
               <input
                 type="password"
-                className="text-field w-input"
-                name="Password-2"
-                data-name="Password 2"
+                className="text-field"
+                name="Password"
+                data-name="Password"
                 placeholder="Enter your Password"
-                id="Password-2"
+                id="Password"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -114,32 +117,7 @@ const LoginDialog = () => {
             <div className="buttontitle">Login</div>
           </button>
           <div className="dialogtxt">Or login with:</div>
-          <div className="oauthgrid">
-            <button href="#" className="itembutton oauth w-inline-block" onClick={handleGoogleSignIn}>
-              <div className="itemobj">
-                <div className="fonticon brands"></div>
-              </div>
-              <div className="itembody">
-                <div className="buttontitle _12">Google</div>
-              </div>
-            </button>
-            <button href="#" className="itembutton oauth w-inline-block">
-              <div className="itemobj">
-                <div className="fonticon brands"></div>
-              </div>
-              <div className="itembody">
-                <div className="buttontitle _12">Twitter</div>
-              </div>
-            </button>
-            <button href="#" className="itembutton oauth w-inline-block">
-              <div className="itemobj">
-                <img src="https://uploads-ssl.webflow.com/647fa62eb19b9b9e23cdc100/648029610832005036e0f702_hc.svg" loading="lazy" alt="" className="icon" />
-              </div>
-              <div className="itembody">
-                <div className="buttontitle _12">Handcash</div>
-              </div>
-            </button>
-          </div>
+          <SocialLoginButtons handleGoogleSignIn={handleGoogleSignIn} />
           <div className="dialogtxt _12">
             Do not have an account?{' '}
             <Link href="/signup" className="link">Sign Up</Link>
@@ -147,8 +125,6 @@ const LoginDialog = () => {
             Forgot password?{' '}
             <a className="link" onClick={handleReset}>Reset</a>
             <br />
-            {/* Quick login?{' '} */}
-            {/* <button className="link" onClick={handleQuickLogin}>Send link</button> */}
           </div>
           {emailError && <div className="dialogtxt error">{emailError}</div>}
           {passwordError && <div className="dialogtxt error">{passwordError}</div>}

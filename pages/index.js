@@ -4,7 +4,6 @@ require('dotenv').config();
 
 import Viewport from '../components/Viewport';
 
-// IndexPage component
 const IndexPage = () => {
   return (
 
