@@ -1,8 +1,8 @@
+[build]
+  command = "npm run build"
+  functions = ".next/api" # Specify the path to your serverless functions directory
+
 [[redirects]]
-  from = "/.netlify/functions/*"
-  to = "/api/:splat"
+  from = "/api/*" # Redirect requests made to /api/* to your serverless functions
+  to = ".next/api/:splat"
   status = 200
-
-
-  [[plugins]]
-  package = "@netlify/plugin-nextjs"
