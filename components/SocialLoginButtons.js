@@ -31,6 +31,18 @@ const SocialLoginButtons = () => {
     }
   };
 
+  const handleHandCashSignIn = async (e) => {
+    e.preventDefault(); // Prevent form submission
+
+    try {
+      const response = await fetch("/.netlify/functions/getHandCashRedirect");
+      const data = await response.json();
+      window.location.href = data.redirectionUrl;
+    } catch (error) {
+      console.error('Error signing in with HandCash:', error);
+    }
+  };
+
   return (
     <div className="oauthgrid">
       <button type="button" className="itembutton oauth" onClick={handleGoogleSignIn}>
@@ -49,7 +61,7 @@ const SocialLoginButtons = () => {
           <div className="buttontitle _12">Twitter</div>
         </div>
       </button>
-      <button className="itembutton oauth">
+      <button className="itembutton oauth" onClick={handleHandCashSignIn}>
         <div className="itemobj">
           <img
             src="https://uploads-ssl.webflow.com/647fa62eb19b9b9e23cdc100/648029610832005036e0f702_hc.svg"
@@ -67,4 +79,3 @@ const SocialLoginButtons = () => {
 };
 
 export default SocialLoginButtons;
-
