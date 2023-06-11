@@ -18,8 +18,8 @@ const Navbar = () => {
   return (
     <div className="navbar">
         <Link href="/" className="navlink">
-          <div className="navicon"></div>
-          <div className="navlabel">Home</div>
+        <img className="imgicon" src="https://uploads-ssl.webflow.com/5ef3b5428f4b7952587ac1df/648532fe14507f85e6f53994_agora.svg" />
+          <div className="navlabel">AGORA</div>
         </Link>
         <Link href="#" className="navlink">
           <div className="navicon"></div>

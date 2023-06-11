@@ -49,15 +49,13 @@ const SignUpPage = () => {
   return (
     <Viewport>
       <PageLayout
-        title="AGORA BETA v0.0.1"
-        description="This is some text inside of a div block."
+        title="Sign Up"
+        description="Welcome home, citizen of AGORA"
         headerObjects={[
-          { icon: '' },
+          { icon: '' },
           { icon: '', onClick: () => console.log('Perform action') },
-        ]}
-      >
-        <div className="body">
-          <SignUpDialog
+        ]}>
+           <SignUpDialog
             email={email}
             setEmail={setEmail}
             password={password}
@@ -68,8 +66,7 @@ const SignUpPage = () => {
             passwordError={passwordError}
             signupError={signupError}
           />
-        </div>
-        <div className="footer">{/* Footer content */}</div>
+          <div className="footer">{/* Footer content */}</div>
       </PageLayout>
     </Viewport>
   );

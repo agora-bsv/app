@@ -69,10 +69,9 @@ const LoginPage = () => {
         title="Login"
         description="Welcome back, fellow human."
         headerObjects={[
-          { icon: '' },
+          { icon: '' },
           { icon: '', onClick: () => console.log('Perform action') },
         ]}>
-   
             <LoginDialog
             router={router}
             email={email}
@@ -85,8 +84,7 @@ const LoginPage = () => {
             passwordError={passwordError}
             loginError={loginError}
           />
-        
-        <div className="footer">{/* Footer content */}</div>
+          <div className="footer">{/* Footer content */}</div>
       </PageLayout>
     </Viewport>
   );

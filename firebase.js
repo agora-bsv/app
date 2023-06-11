@@ -31,6 +31,12 @@ export const signInWithGoogle = () => {
   return auth.signInWithPopup(googleProvider);
 };
 
+// Enable Twitter sign-in provider
+const twitterProvider = new firebase.auth.TwitterAuthProvider();
+export const signInWithTwitter = () => {
+  return auth.signInWithPopup(twitterProvider);
+};
+
 // Create a Firebase auth context
 export const AuthContext = createContext();
 
@@ -66,4 +72,3 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-

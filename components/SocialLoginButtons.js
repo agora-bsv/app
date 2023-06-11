@@ -1,24 +1,35 @@
 // components/SocialLoginButtons.js
 
 import React from 'react';
-import { signInWithGoogle } from '../firebase';
+import { signInWithGoogle, signInWithTwitter } from '../firebase';
 import { useRouter } from 'next/router';
 
-
 const SocialLoginButtons = () => {
-    const router = useRouter();
-  
-    const handleGoogleSignIn = async (e) => {
-      e.preventDefault(); // Prevent form submission
-  
-      try {
-        await signInWithGoogle();
-        console.log('Google login successful');
-        router.push('/profile');
-      } catch (error) {
-        console.error('Error signing in with Google:', error);
-      }
-    };
+  const router = useRouter();
+
+  const handleGoogleSignIn = async (e) => {
+    e.preventDefault(); // Prevent form submission
+
+    try {
+      await signInWithGoogle();
+      console.log('Google login successful');
+      router.push('/profile');
+    } catch (error) {
+      console.error('Error signing in with Google:', error);
+    }
+  };
+
+  const handleTwitterSignIn = async (e) => {
+    e.preventDefault(); // Prevent form submission
+
+    try {
+      await signInWithTwitter();
+      console.log('Twitter login successful');
+      router.push('/profile');
+    } catch (error) {
+      console.error('Error signing in with Twitter:', error);
+    }
+  };
 
   return (
     <div className="oauthgrid">
@@ -30,7 +41,7 @@ const SocialLoginButtons = () => {
           <div className="buttontitle _12">Google</div>
         </div>
       </button>
-      <button className="itembutton oauth">
+      <button className="itembutton oauth" onClick={handleTwitterSignIn}>
         <div className="itemobj">
           <div className="fonticon brands"></div>
         </div>
@@ -56,3 +67,4 @@ const SocialLoginButtons = () => {
 };
 
 export default SocialLoginButtons;
+
