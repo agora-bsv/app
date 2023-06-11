@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { auth } from '../firebase';
 import Viewport from '../components/Viewport';
 import PageLayout from '../components/PageLayout';
-import { withAuth } from '../utils/AuthUtils';
+import { withAuth } from '../utils/auth';
 import Dialog from '../components/Dialog';
 
 const VerifyEmailPage = () => {

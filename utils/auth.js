@@ -1,4 +1,4 @@
-// AuthUtils.js
+// utils/auth.js
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/router'; // Import useRouter

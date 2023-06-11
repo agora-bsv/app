@@ -3,7 +3,7 @@
 import { auth } from '../firebase';
 import Viewport from '../components/Viewport';
 import PageLayout from '../components/PageLayout';
-import { withAuth } from '../utils/AuthUtils';
+import { withAuth } from '../utils/auth';
 
 const ProfilePage = () => {
   const title = 'Profile';
