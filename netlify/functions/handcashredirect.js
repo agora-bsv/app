@@ -1,4 +1,4 @@
-// netlify/functions/getHandCashRedirect.js
+// netlify/functions/handcashRedirect.js
 
 const { HandCashConnect } = require("@handcash/handcash-connect");
 

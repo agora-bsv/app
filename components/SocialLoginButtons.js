@@ -33,15 +33,18 @@ const SocialLoginButtons = () => {
 
   const handleHandCashSignIn = async (e) => {
     e.preventDefault(); // Prevent form submission
-
+  
     try {
-      const response = await fetch("/.netlify/functions/getHandCashRedirect");
+      const response = await fetch("/.netlify/functions/handcashRedirect/");
+      console.log(response); // Log the response here
       const data = await response.json();
       window.location.href = data.redirectionUrl;
     } catch (error) {
       console.error('Error signing in with HandCash:', error);
     }
   };
+  
+  
 
   return (
     <div className="oauthgrid">

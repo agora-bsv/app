@@ -39,3 +39,6 @@ next-env.d.ts
 
 # firebaseConfig
 firebaseConfig.js
+
+# Local Netlify folder
+.netlify
