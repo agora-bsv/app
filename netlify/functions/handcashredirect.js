@@ -1,4 +1,4 @@
-// netlify/functions/handcashRedirect.js
+// netlify/functions/handcashredirect.js
 
 const { HandCashConnect } = require("@handcash/handcash-connect");
 
@@ -13,7 +13,7 @@ exports.handler = async (event, context) => {
   const handCashConnect = new HandCashConnect({
     appId: appId,
     appSecret: appSecret,
-    environment: "PRODUCTION"  // You might want to make this configurable too
+    environment: "PRODUCTION" // You might want to make this configurable too
   });
 
   const redirectionUrl = handCashConnect.getRedirectionUrl();
@@ -21,11 +21,10 @@ exports.handler = async (event, context) => {
   return {
     statusCode: 200,
     headers: {
-      "Access-Control-Allow-Origin": "*", // Allow requests from any origin
-      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-      "Access-Control-Allow-Methods": "GET, OPTIONS" // Add the allowed HTTP methods
+      "Access-Control-Allow-Origin": "*" // Allow requests from any origin
     },
     body: JSON.stringify({ redirectionUrl })
   };
 };
+
 
