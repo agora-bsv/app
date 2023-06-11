@@ -1,34 +1,24 @@
-// netlify/functions/handcash-callback.js
+const sessionTokenRepository = require('./session-tokens');
 
-const HandCashService = require("@handcash/handcash-connect").HandCashService;
-const SessionTokenRepository = require("./sessionTokenRepository"); // Replace with your session token repository implementation
+export default async function handler(req, res) {
+  const { authToken } = req.query;
 
-exports.handler = async (event, context) => {
-  const { authToken } = event.queryStringParameters;
+  // Get the user's public profile using the authToken
+  const publicProfile = await new HandCashService(authToken).getProfile();
 
-  try {
-    const { publicProfile } = await new HandCashService(authToken).getProfile();
+  const payload = {
+    sessionId: uuidv4(),
+    user: {
+      handle: publicProfile.handle,
+      displayName: publicProfile.displayName,
+      avatarUrl: publicProfile.avatarUrl,
+    },
+  };
 
-    const payload = {
-      sessionId: generateSessionId(),
-      user: {
-        handle: publicProfile.handle,
-        balance: publicProfile.balance, // Replace with the appropriate balance field from the HandCash response
-        permissions: publicProfile.permissions, // Replace with the appropriate permissions field from the HandCash response
-      },
-    };
+  // Generate a session token based on the payload
+  const sessionToken = sessionTokenRepository.generate(payload);
 
-    const sessionToken = SessionTokenRepository.generate(payload);
+  // Redirect the user to the home page with the sessionToken parameter
+  return res.redirect(`/wallet?sessionToken=${sessionToken}`);
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ sessionToken }),
-    };
-  } catch (error) {
-    console.error("Error processing HandCash login:", error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: "Internal Server Error" }),
-    };
-  }
-};
+}

@@ -1,31 +1,21 @@
-// /api/functions/handcash-callback.js
+// /netlify/functions/handcash-callback.js
+const sessionTokenRepository = require("./sessionTokenRepository");
 
-import { HandCashConnect } from '@handcash/handcash-connect';
+export default async function handler(req, res) {
+  const { authToken } = req.query;
 
-export async function handler(event, context) {
-  const { HC_APP_ID, HC_APP_SECRET } = process.env;
-  const { queryParameters } = event;
+  // Make API requests to HandCash or perform necessary operations with the authToken
+  // ...
 
-  const authToken = queryParameters.authToken; // Retrieve the authToken from the query parameters
+  // Generate a unique sessionId using a library like uuid
+  const sessionId = generateSessionId(); // Implement your own function to generate sessionId
 
-  if (authToken) {
-    try {
-      // Initialize HandCashConnect SDK with app ID and app secret
-      const handCashConnect = new HandCashConnect({
-        appId: HC_APP_ID,
-        appSecret: HC_APP_SECRET,
-      });
+  // Generate the sessionToken using your preferred method (e.g., JWT)
+  const sessionToken = generateSessionToken(authToken, sessionId); // Implement your own function to generate sessionToken
 
-      // Initialize user account and perform necessary actions based on the callback
-      const account = handCashConnect.getAccountFromAuthToken(authToken);
-      // Perform actions as required
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
+  // Store the sessionToken and associated data in your data store
+  sessionTokenRepository.set(sessionToken, { authToken, sessionId, profile });
 
-  return {
-    statusCode: 200,
-    body: 'Callback received',
-  };
+  // Redirect the user to the wallet page with the sessionToken parameter
+  return res.redirect(`/wallet?sessionToken=${sessionToken}`);
 }

@@ -1,5 +1,7 @@
-// pages/wallet.js
+// /pages/wallet.js
+
 import React from "react";
+import { useRouter } from "next/router";
 
 const WalletPage = ({ handle, balance, permissions }) => {
   return (
