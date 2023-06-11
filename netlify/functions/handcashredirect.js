@@ -20,6 +20,12 @@ exports.handler = async (event, context) => {
 
   return {
     statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*", // Allow requests from any origin
+      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+      "Access-Control-Allow-Methods": "GET, OPTIONS" // Add the allowed HTTP methods
+    },
     body: JSON.stringify({ redirectionUrl })
   };
 };
+

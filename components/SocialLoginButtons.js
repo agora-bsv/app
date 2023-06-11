@@ -1,6 +1,7 @@
 // components/SocialLoginButtons.js
 
 import React from 'react';
+import axios from 'axios'; // Import axios library
 import { signInWithGoogle, signInWithTwitter } from '../firebase';
 import { useRouter } from 'next/router';
 
@@ -33,16 +34,17 @@ const SocialLoginButtons = () => {
 
   const handleHandCashSignIn = async (e) => {
     e.preventDefault(); // Prevent form submission
-  
+
     try {
-      const response = await fetch("/.netlify/functions/handcashRedirect/");
+      const response = await axios.post('/.netlify/functions/handcashredirect');
       console.log(response); // Log the response here
-      const data = await response.json();
+      const data = response.data;
       window.location.href = data.redirectionUrl;
     } catch (error) {
       console.error('Error signing in with HandCash:', error);
     }
   };
+  
   
   
 
