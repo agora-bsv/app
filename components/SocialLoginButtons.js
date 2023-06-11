@@ -32,18 +32,15 @@ const SocialLoginButtons = () => {
     }
   };
 
-  const handleHandCashSignIn = async (e) => {
+  const handleHandCashSignIn = (e) => {
     e.preventDefault(); // Prevent form submission
-
-    try {
-      const response = await axios.post('/.netlify/functions/handcashredirect');
-      console.log(response); // Log the response here
-      const data = response.data;
-      window.location.href = data.redirectionUrl;
-    } catch (error) {
-      console.error('Error signing in with HandCash:', error);
-    }
+  
+    const appId = process.env.HANDCASH_APP_ID;
+    const handCashAuthorizationUrl = `https://app.handcash.io/#/authorizeApp?appId=${appId}`;
+  
+    window.location.href = handCashAuthorizationUrl;
   };
+
   
   
   
