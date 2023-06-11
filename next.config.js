@@ -1,6 +1,16 @@
-// nextconfig.js
+// next.config.js
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {}
+const withTM = require('next-transpile-modules')(['@handcash/handcash-connect']);
 
-module.exports = nextConfig
+module.exports = withTM({
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        fs: false
+      };
+    }
+
+    return config;
+  }
+});
+

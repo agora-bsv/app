@@ -91,5 +91,3 @@ const VerifyEmailPage = () => {
 };
 
 export default withAuth(VerifyEmailPage);
-
-

@@ -3,6 +3,8 @@
 import '../styles/globals.css';
 import { AuthProvider } from '../firebase';
 import Viewport from '../components/Viewport';
+import '../text-encoding-polyfill.js';
+
 
 function Agora({ Component, pageProps }) {
   return (
@@ -14,6 +16,13 @@ function Agora({ Component, pageProps }) {
   );
 }
 
-export default Agora;
+export default function App({ Component, pageProps }) {
+  return (
+    <Agora Component={Component} pageProps={pageProps} />
+  );
+}
+
+
+
 
 
