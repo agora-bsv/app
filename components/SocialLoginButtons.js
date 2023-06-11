@@ -36,7 +36,7 @@ const SocialLoginButtons = () => {
     e.preventDefault(); // Prevent form submission
   
     const appId = process.env.HANDCASH_APP_ID;
-    const handCashAuthorizationUrl = `https://app.handcash.io/#/authorizeApp?appId=64854683e492acda99fc0ab6}`;
+    const handCashAuthorizationUrl = `https://app.handcash.io/#/authorizeApp?appId=64854683e492acda99fc0ab6`;
   
     window.location.href = handCashAuthorizationUrl;
   };
