@@ -5,7 +5,7 @@ import axios from 'axios'; // Import axios library
 import { signInWithGoogle, signInWithTwitter } from '../firebase';
 import { useRouter } from 'next/router';
 
-const SocialLoginButtons = () => {
+const SocialLoginButtons = ( { redirectionUrl }) => {
   const router = useRouter();
 
   const handleGoogleSignIn = async (e) => {
@@ -35,10 +35,10 @@ const SocialLoginButtons = () => {
   const handleHandCashSignIn = (e) => {
     e.preventDefault(); // Prevent form submission
   
-    const appId = process.env.HANDCASH_APP_ID;
-    const handCashAuthorizationUrl = `https://app.handcash.io/#/authorizeApp?appId=64854683e492acda99fc0ab6`;
+    // const appId = process.env.HANDCASH_APP_ID;
+    // const handCashAuthorizationUrl = `https://app.handcash.io/#/authorizeApp?appId=64854683e492acda99fc0ab6`;
   
-    window.location.href = handCashAuthorizationUrl;
+    window.location.href = redirectionUrl;
   };
 
   

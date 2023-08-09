@@ -5,7 +5,7 @@ import Link from 'next/link';
 import SocialLoginButtons from './SocialLoginButtons';
 import { signInWithGoogle, auth } from '../firebase';
 
-const LoginDialog = ({ router }) => {
+const LoginDialog = ({ router, redirectionUrl }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -117,7 +117,7 @@ const LoginDialog = ({ router }) => {
             <div className="buttontitle">Login</div>
           </button>
           <div className="dialogtxt">Or login with:</div>
-          <SocialLoginButtons handleGoogleSignIn={handleGoogleSignIn} />
+          <SocialLoginButtons handleGoogleSignIn={handleGoogleSignIn} redirectionUrl={redirectionUrl} />
           <div className="dialogtxt _12">
             Do not have an account?{' '}
             <Link href="/signup" className="link">Sign Up</Link>
