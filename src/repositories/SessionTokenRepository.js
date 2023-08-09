@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const jwtSecret = process.env.jwt_secret;
+const jwtSecret = process.env.JWT_SECRET;
 
 export default class SessionTokenRepository {
     static generate(payload) {
