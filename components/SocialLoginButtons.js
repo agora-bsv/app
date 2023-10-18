@@ -2,12 +2,13 @@
 
 import React from 'react';
 import axios from 'axios'; // Import axios library
-import { signInWithGoogle, signInWithTwitter } from '../firebase';
+import { useAuth } from '../src/contexts/AuthContext';
 import { useRouter } from 'next/router';
 
 const SocialLoginButtons = ( { redirectionUrl }) => {
   const router = useRouter();
-
+  const { signInWithGoogle, signInWithTwitter } = useAuth();
+  
   const handleGoogleSignIn = async (e) => {
     e.preventDefault(); // Prevent form submission
 

@@ -1,15 +1,18 @@
 // components/Navbar.js
 
 import Link from 'next/link';
-import { useAuth } from '../firebase';
+import { useAuth } from '../src/contexts/AuthContext';
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
-  const { user, signOut } = useAuth();
+  const { currentUser, logout } = useAuth();
+  const router = useRouter();
 
   const handleLogout = async () => {
     try {
-      await signOut();
-      // Redirect the user to the homepage or login page
+      await logout();
+      // redirect to login page
+      router.push('/login');
     } catch (error) {
       console.error(error);
     }
@@ -37,15 +40,15 @@ const Navbar = () => {
           <div className="navicon"></div>
           <div className="navlabel">Wallet</div>
         </Link>
-        {user ? (
+        {currentUser ? (
           <>
-            {user.emailVerified && (
+            {currentUser.emailVerified && (
               <Link href="/profile" className="navlink">
                 <div className="navicon"></div>
                 <div className="navlabel">Profile</div>
               </Link>
             )}
-            {!user.emailVerified && (
+            {!currentUser.emailVerified && (
               <Link href="/verify-email" className="navlink">
                 <div className="navicon"></div>
                 <div className="navlabel">Verify Email</div>

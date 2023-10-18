@@ -3,9 +3,10 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import SocialLoginButtons from './SocialLoginButtons';
-import { signInWithGoogle, auth } from '../firebase';
+import { useAuth } from '../src/contexts/AuthContext';
 
 const LoginDialog = ({ router, redirectionUrl }) => {
+  const { signInWithGoogle, auth } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
