@@ -5,9 +5,9 @@ import axios from 'axios'; // Import axios library
 import { useAuth } from '../src/contexts/AuthContext';
 import { useRouter } from 'next/router';
 
-const SocialLoginButtons = ( { redirectionUrl }) => {
+const SocialLoginButtons = () => {
   const router = useRouter();
-  const { signInWithGoogle, signInWithTwitter } = useAuth();
+  const { signInWithGoogle, signInWithTwitter, signInWithHandCash } = useAuth();
   
   const handleGoogleSignIn = async (e) => {
     e.preventDefault(); // Prevent form submission
@@ -35,16 +35,8 @@ const SocialLoginButtons = ( { redirectionUrl }) => {
 
   const handleHandCashSignIn = (e) => {
     e.preventDefault(); // Prevent form submission
-  
-    // const appId = process.env.HANDCASH_APP_ID;
-    // const handCashAuthorizationUrl = `https://app.handcash.io/#/authorizeApp?appId=64854683e492acda99fc0ab6`;
-  
-    window.location.href = redirectionUrl;
+    signInWithHandCash();
   };
-
-  
-  
-  
 
   return (
     <div className="oauthgrid">

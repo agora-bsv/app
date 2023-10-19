@@ -1,46 +1,48 @@
 // /pages/wallet.js
 
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
-import HandCashService from '../src/services/HandCashService';
-import SessionTokenRepository from "../src/repositories/SessionTokenRepository";
+import { useAuth } from '../src/contexts/AuthContext'; 
+import Viewport from '../components/Viewport';
+import PageLayout from '../components/PageLayout';
 
-export function getServerSideProps({query}) {
-  const {sessionToken} = query;
-  const redirectionUrl = new HandCashService().getRedirectionUrl();
-  try {
-      return {
-          props: {
-              redirectionUrl,
-              sessionToken: sessionToken || false,
-              user: sessionToken ? SessionTokenRepository.decode(sessionToken).user : false,
-          },
-      };
-  } catch (error) {
-      console.log(error);
-      return {
-          props: {
-              redirectionUrl,
-              sessionToken: false,
-              user: false,
-          },
-      };
-  }
-}
+const WalletPage = () => {
+  // const user = handcashUser;
+  // useEffect(() => {
+  //   if (window.location.search.includes('reload=true')) {
+  //     window.location.href = '/wallet';
+  //   }
+  // }, []);
+  const { currentUser } = useAuth();
+  const user = currentUser;
+  const title = 'Wallet';
+  const description = 'This is your wallet page';
+  const headerObjects = [
+    { icon: '' },
+    { icon: '', onClick: () => console.log('Perform action') },
+  ];
 
-const WalletPage = ({ user }) => {
-  console.log('user: ', user);
   return (
+    <Viewport>
+    <PageLayout title={title} description={description} headerObjects={headerObjects}>
     <div>
-      <h1>Welcome, {user.handle}!</h1>
-      <img src={user.avatarUrl} />
-      <p>displayName: {user.displayName}</p>
-      <p>Balance ({user.balance.fiatCurrencyCode}): {user.balance.fiatBalance}</p>
-      <p>Balance (Satoshi): {user.balance.satoshiBalance}</p>	
+      { user ? 
+      <>
+        <h1>Welcome, {user.displayName}!</h1>
+        <img src={user.photoURL} />
+        <p>handle: @{user.handle}</p>
+        <p>Balance ({user.balance.fiatCurrencyCode}): {user.balance.fiatBalance}</p>
+        <p>Balance (Satoshi): {user.balance.satoshiBalance}</p>	
 
-      {/* <p>Permissions: {user.permissions.join(", ")}</p> */}
-      {/* Add your wallet UI components here */}
+        {/* <p>Permissions: {user.permissions.join(", ")}</p> */}
+        {/* Add your wallet UI components here */}
+      </>
+      : <p>Loading...</p>}
+      
     </div>
+    </PageLayout>
+  </Viewport>
+    
   );
 };
 

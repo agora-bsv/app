@@ -6,32 +6,8 @@ import { useRouter } from 'next/router';
 import LoginDialog from '../components/LoginDialog';
 import Viewport from '../components/Viewport';
 import PageLayout from '../components/PageLayout';
-import HandCashService from '../src/services/HandCashService';
 
-export function getServerSideProps({query}) {
-  const {sessionToken} = query;
-  const redirectionUrl = new HandCashService().getRedirectionUrl();
-  try {
-      return {
-          props: {
-              redirectionUrl,
-              sessionToken: sessionToken || false,
-              user: sessionToken ? SessionTokenRepository.decode(sessionToken).user : false,
-          },
-      };
-  } catch (error) {
-      console.log(error);
-      return {
-          props: {
-              redirectionUrl,
-              sessionToken: false,
-              user: false,
-          },
-      };
-  }
-}
-
-const LoginPage = ( { redirectionUrl }) => {
+const LoginPage = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -107,7 +83,6 @@ const LoginPage = ( { redirectionUrl }) => {
             emailError={emailError}
             passwordError={passwordError}
             loginError={loginError}
-            redirectionUrl={redirectionUrl}
           />
           <div className="footer">{/* Footer content */}</div>
       </PageLayout>

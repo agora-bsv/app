@@ -4,8 +4,14 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import SocialLoginButtons from './SocialLoginButtons';
 import { useAuth } from '../src/contexts/AuthContext';
+// import dynamic from 'next/dynamic';
 
-const LoginDialog = ({ router, redirectionUrl }) => {
+// const SocialLoginButtons = dynamic(
+//   () => import('./SocialLoginButtons'),
+//   { ssr: false }
+// );
+
+const LoginDialog = ({ router }) => {
   const { signInWithGoogle, auth } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -118,7 +124,7 @@ const LoginDialog = ({ router, redirectionUrl }) => {
             <div className="buttontitle">Login</div>
           </button>
           <div className="dialogtxt">Or login with:</div>
-          <SocialLoginButtons handleGoogleSignIn={handleGoogleSignIn} redirectionUrl={redirectionUrl} />
+          <SocialLoginButtons handleGoogleSignIn={handleGoogleSignIn} />
           <div className="dialogtxt _12">
             Do not have an account?{' '}
             <Link href="/signup" className="link">Sign Up</Link>
