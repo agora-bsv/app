@@ -1,17 +1,38 @@
 // components/Navbar.js
 
 import Link from 'next/link';
-import { useAuth } from '../firebase';
+import { useAuth } from '../src/contexts/AuthContext';
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
-  const { user, signOut } = useAuth();
+  const { currentUser, logout } = useAuth();
+  const router = useRouter();
+  console.log('Navbar currentUser', currentUser)
 
+  // const handleLogout = async () => {
+  //   try {
+  //     await logout();
+  //     // redirect to login page
+  //     router.push('/login');
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
   const handleLogout = async () => {
-    try {
-      await signOut();
-      // Redirect the user to the homepage or login page
-    } catch (error) {
-      console.error(error);
+    if (currentUser.authService === 'handcash') {
+      await fetch('/api/hc/logout', {
+        method: 'POST',
+      });
+      window.location.href = "/login";
+      
+    } else {
+      try {
+        await logout();
+        // Redirect the user to the homepage or login page
+        window.location.href = "/login";
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -33,30 +54,29 @@ const Navbar = () => {
           <div className="navicon"></div>
           <div className="navlabel">Chat</div>
         </Link>
-        <Link href="#" className="navlink">
+        {currentUser?.authService === 'handcash' &&
+        <Link href="/wallet" className="navlink">
           <div className="navicon"></div>
           <div className="navlabel">Wallet</div>
+        </Link>}
+        {currentUser && !currentUser.emailVerified && (
+                <Link href="/verify-email" className="navlink">
+                  <div className="navicon"></div>
+                  <div className="navlabel">Verify Email</div>
+                </Link>
+        )}
+        {currentUser ?
+        <>
+        <Link href="/profile" className="navlink">
+          <div className="navicon"></div>
+          <div className="navlabel">Profile</div>
         </Link>
-        {user ? (
-          <>
-            {user.emailVerified && (
-              <Link href="/profile" className="navlink">
-                <div className="navicon"></div>
-                <div className="navlabel">Profile</div>
-              </Link>
-            )}
-            {!user.emailVerified && (
-              <Link href="/verify-email" className="navlink">
-                <div className="navicon"></div>
-                <div className="navlabel">Verify Email</div>
-              </Link>
-            )}
-            <Link href="/" className="navlink" onClick={handleLogout}>
+        <Link href="/" className="navlink" onClick={handleLogout}>
               <div className="navicon"></div>
               <div className="navlabel">Logout</div>
-            </Link>
-          </>
-        ) : (
+        </Link>
+        </>
+        : (
           <>
             <Link href="/login" className="navlink">
               <div className="navicon"></div>
@@ -67,7 +87,7 @@ const Navbar = () => {
               <div className="navlabel">Sign Up</div>
             </Link>
           </>
-        )}
+      )}
     </div>
   );
 };

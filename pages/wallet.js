@@ -1,44 +1,49 @@
 // /pages/wallet.js
 
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
+import { useAuth } from '../src/contexts/AuthContext'; 
+import Viewport from '../components/Viewport';
+import PageLayout from '../components/PageLayout';
 
-const WalletPage = ({ handle, balance, permissions }) => {
+const WalletPage = () => {
+  // const user = handcashUser;
+  // useEffect(() => {
+  //   if (window.location.search.includes('reload=true')) {
+  //     window.location.href = '/wallet';
+  //   }
+  // }, []);
+  const { currentUser } = useAuth();
+  const user = currentUser;
+  const title = 'Wallet';
+  const description = 'This is your wallet page';
+  const headerObjects = [
+    { icon: '' },
+    { icon: '', onClick: () => console.log('Perform action') },
+  ];
+
   return (
+    <Viewport>
+    <PageLayout title={title} description={description} headerObjects={headerObjects}>
     <div>
-      <h1>Welcome, {handle}!</h1>
-      <p>Balance: {balance}</p>
-      <p>Permissions: {permissions.join(", ")}</p>
-      {/* Add your wallet UI components here */}
+      { user ? 
+      <>
+        <h1>Welcome, {user.displayName}!</h1>
+        <img src={user.photoURL} />
+        <p>handle: @{user.handle}</p>
+        <p>Balance ({user.balance.fiatCurrencyCode}): {user.balance.fiatBalance}</p>
+        <p>Balance (Satoshi): {user.balance.satoshiBalance}</p>	
+
+        {/* <p>Permissions: {user.permissions.join(", ")}</p> */}
+        {/* Add your wallet UI components here */}
+      </>
+      : <p>Loading...</p>}
+      
     </div>
+    </PageLayout>
+  </Viewport>
+    
   );
 };
-
-export async function getServerSideProps({ query }) {
-  const { sessionToken } = query;
-
-  try {
-    // Fetch user data based on the sessionToken
-    const userData = await fetchUserData(sessionToken); // Implement your own function to fetch user data
-
-    return {
-      props: {
-        handle: userData.handle,
-        balance: userData.balance,
-        permissions: userData.permissions,
-      },
-    };
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-
-    // Redirect to an error page or handle the error as needed
-    return {
-      redirect: {
-        destination: "/error",
-        permanent: false,
-      },
-    };
-  }
-}
 
 export default WalletPage;

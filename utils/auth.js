@@ -3,7 +3,8 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router'; // Import useRouter
 
-import { auth } from '../firebase';
+// import { auth } from '../firebase';
+import { useAuth } from '../src/contexts/AuthContext';
 
 export const checkEmailVerification = (user, router) => {
   if (!user) {
@@ -20,8 +21,11 @@ export const checkEmailVerification = (user, router) => {
 
 export const withAuth = (WrappedComponent) => {
   const AuthenticatedComponent = (props) => {
-    const user = auth.currentUser;
+    const { currentUser, auth } = useAuth();
+    const user = currentUser.authService === 'handcash' ? currentUser : auth.currentUser;
+    // const user = auth.currentUser;
     const router = useRouter(); // Use useRouter
+    console.log('withAuth user', user)
 
     useEffect(() => {
       checkEmailVerification(user, router);

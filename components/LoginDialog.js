@@ -3,9 +3,16 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import SocialLoginButtons from './SocialLoginButtons';
-import { signInWithGoogle, auth } from '../firebase';
+import { useAuth } from '../src/contexts/AuthContext';
+// import dynamic from 'next/dynamic';
+
+// const SocialLoginButtons = dynamic(
+//   () => import('./SocialLoginButtons'),
+//   { ssr: false }
+// );
 
 const LoginDialog = ({ router }) => {
+  const { signInWithGoogle, auth } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');

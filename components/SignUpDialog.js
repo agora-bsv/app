@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import SocialLoginButtons from './SocialLoginButtons';
-import { auth } from '../firebase';
+import { useAuth } from '../src/contexts/AuthContext';
 
 const SignUpDialog = ({
   email,
@@ -12,6 +12,7 @@ const SignUpDialog = ({
   setPassword,
   handleGoogleSignIn,
 }) => {
+  const { auth } = useAuth();
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [signupError, setSignupError] = useState('');

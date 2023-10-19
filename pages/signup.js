@@ -3,13 +3,14 @@
 // pages/signup.js
 
 import React, { useState } from 'react';
-import { auth, signInWithGoogle } from '../firebase';
+import { useAuth } from '../src/contexts/AuthContext';
 import { useRouter } from 'next/router';
 import SignUpDialog from '../components/SignUpDialog';
 import Viewport from '../components/Viewport';
 import PageLayout from '../components/PageLayout';
 
 const SignUpPage = () => {
+  const { auth, signInWithGoogle } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

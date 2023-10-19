@@ -1,12 +1,16 @@
-//  pages/_app.js
-
+// pages/_app.js
 import '../styles/globals.css';
-import { AuthProvider } from '../firebase';
+import { AuthProvider } from '../src/contexts/AuthContext';
 import Viewport from '../components/Viewport';
-import '../text-encoding-polyfill.js';
+// import '../text-encoding-polyfill.js';
 
+// if (typeof global.TextDecoder === 'undefined') {
+//   const { TextDecoder, TextEncoder } = require('util');
+//   global.TextDecoder = TextDecoder;
+//   global.TextEncoder = TextEncoder;
+// }
 
-function Agora({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return (
     <AuthProvider>
       <Viewport>
@@ -16,13 +20,4 @@ function Agora({ Component, pageProps }) {
   );
 }
 
-export default function App({ Component, pageProps }) {
-  return (
-    <Agora Component={Component} pageProps={pageProps} />
-  );
-}
-
-
-
-
-
+export default App;
