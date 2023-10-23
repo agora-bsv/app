@@ -4,29 +4,40 @@ import HandCashService from "../../../src/services/HandCashService";
 import SessionTokenRepository from "../../../src/repositories/SessionTokenRepository";
 
 export default async function handler(req, res) {
-    const {authToken} = req.query;
+    try {
+        const {authToken} = req.query;
 
-    const {publicProfile} = await new HandCashService(authToken).getProfile();
-    const balance = await new HandCashService(authToken).getBalance()
+        // Check if authToken is not undefined or null
+        if (!authToken) {
+            throw new Error("AuthToken is missing from the query parameters.");
+        }
 
-    const payload = {
-        sessionId: uuidv4(),
-        user: {
-            handle: publicProfile.handle,
-            displayName: publicProfile.displayName,
-            avatarUrl: publicProfile.avatarUrl,
-            balance,
-        },
-    };
-    const sessionToken = SessionTokenRepository.generate(payload);
-    AuthTokenRepository.setAuthToken(authToken, payload.sessionId);
+        const handCashService = new HandCashService(authToken);
+        const {publicProfile} = await handCashService.getProfile();
+        const balance = await handCashService.getBalance();
 
-    // Definir o cookie
-    res.setHeader('Set-Cookie', `sessionToken=${sessionToken}; Path=/; HttpOnly; SameSite=Strict`);
+        const payload = {
+            sessionId: uuidv4(),
+            user: {
+                handle: publicProfile.handle,
+                displayName: publicProfile.displayName,
+                avatarUrl: publicProfile.avatarUrl,
+                balance,
+            },
+        };
 
-    // Redirecionar o usuário
-    // return res.redirect('/');
-    // return res.redirect('/?reload=true');
-    // return res.redirect(`/wallet?reload=true`);  
-    return res.redirect(`/wallet`);  
+        const sessionToken = SessionTokenRepository.generate(payload);
+        AuthTokenRepository.setAuthToken(authToken, payload.sessionId);
+
+        // Set cookie
+        res.setHeader('Set-Cookie', `sessionToken=${sessionToken}; Path=/; HttpOnly; SameSite=Strict`);
+
+        // Redirect user
+        return res.redirect(`/wallet`);
+    } catch (error) {
+        console.error('Error in /api/hc/callback:', error);
+
+        // Send an error response
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+    }
 }
