@@ -441,3 +441,48 @@ body {
     font-style: normal;
     font-display: swap;
   }
+
+  /* crowdfunding */
+
+  .funding-items-container {
+    display: flex;            /* Ativa o Flexbox */
+    flex-direction: column;   /* Empilha os itens verticalmente */
+    align-items: center;      /* Centraliza os itens horizontalmente */
+    justify-content: center;  /* Centraliza os itens verticalmente, se desejado */
+    gap: 20px;                /* Espaço opcional entre os itens */
+    /* overflow-y: auto;
+    height: 100vh; */
+  }
+
+  .funding-item {
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    min-width: 480px;
+    text-align: left;
+  }
+
+  .funding-feature-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .funding-feature-description {
+    margin-bottom: 20px;
+  }
+
+  .funding-amount {
+    display: flex;
+    justify-content: space-between;    
+    font-size: 18px;
+    color: #333;
+  }
+
+  .collected-amount {
+    font-size: 18px;
+    color: #62ca8e
+  }

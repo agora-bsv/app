@@ -54,6 +54,10 @@ const Navbar = () => {
           <div className="navicon"></div>
           <div className="navlabel">Chat</div>
         </Link>
+        <Link href="/crowdfunding" className="navlink">
+          <div className="navicon">{String.fromCodePoint(0xf4c0)}</div>
+          <div className="navlabel">Crowd Funding</div>
+        </Link>
         {currentUser?.authService === 'handcash' &&
         <Link href="/wallet" className="navlink">
           <div className="navicon"></div>
