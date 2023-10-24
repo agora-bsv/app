@@ -1,3 +1,5 @@
+// pages/api/hc/callback.js
+
 import {v4 as uuidv4} from 'uuid';
 import AuthTokenRepository from "../../../src/repositories/AuthTokenRepository";
 import HandCashService from "../../../src/services/HandCashService";
